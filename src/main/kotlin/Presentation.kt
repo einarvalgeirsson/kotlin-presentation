@@ -666,7 +666,7 @@ class Nullability {
 
     fun useProperties() {
         prop.function() // no problem!
-        propCanBeNull?.function() // no no no no! Use ? or !!, preferably ?
+        propCanBeNull.function() // no no no no! Use ? or !!, preferably ?
     }
 
 
