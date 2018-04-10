@@ -1,3 +1,4 @@
+import java.util.*
 
 /**
  * /$$   /$$  /$$$$$$  /$$$$$$$$ /$$       /$$$$$$ /$$   /$$
@@ -895,6 +896,69 @@ class Test3 {
 
 
 /**
+ * String templates
+ */
+
+
+val language = "Kotlin"
+// Kotlin has 6 characters
+val text = "$language has ${language.length} characters"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Destructuring
+ */
+
+// now with prism
+val (red, green, blue) = color
+// destructing four squares
+val (left, top, right, bottom) = rect
+// or more pointedly
+val (x, y) = point
+
+// iterating over a map with destructuring
+for ((key, value) in map) {
+    // do something with the key and the value
+}
+
+// This works because the Kotlin standard library declares extension
+// functions (componentN()) for Map.Entry, with the keyword operator
+operator fun <K, V> Map<K, V>.iterator(): Iterator<Map.Entry<K, V>> = entrySet().iterator()
+operator fun <K, V> Map.Entry<K, V>.component1() = getKey()
+operator fun <K, V> Map.Entry<K, V>.component2() = getValue()
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
  * Kotlin Standard Library
  *
  * Higher-order functions implementing idiomatic patterns (let, apply, use, synchronized, etc).
@@ -1045,6 +1109,56 @@ class StdLib {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+         *
+         * Lazy init, initialized on first call and then cached
+         *
+         */
+        val preferences: String by lazy { sharedPreferences.getString(PREFERENCE_KEY) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+         *
+         * lateinit, a promise to initialize a property later
+         *
+         */
+        class MyActivity : AppCompatActivity() {
+
+            lateinit var recyclerView: RecyclerView   // non-null, but not initialized
+
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+
+                // ..
+                recyclerView = findViewById(R.id.recycler_view) // initialized here
+            }
+        }
 
 
 
