@@ -1,4 +1,4 @@
-package main.interop
+package interop
 
 class PersonRegistry {
     val persons: MutableList<Person> = ArrayList()

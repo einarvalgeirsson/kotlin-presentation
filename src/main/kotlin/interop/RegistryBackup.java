@@ -1,7 +1,5 @@
 package interop;
 
-import main.interop.Person;
-import main.interop.PersonRegistry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

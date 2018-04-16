@@ -1,5 +1,5 @@
 import interop.RegistryBackup
-import main.interop.PersonRegistry
+import interop.PersonRegistry
 import java.util.*
 
 /**
@@ -857,10 +857,11 @@ fun String.replaceSpaceWithDash(): String {
     return this.replace(" ", "-")
 }
 
-fun <T> MutableList<T>.swap(firstIndex: Int, secondIndex: Int) {
+fun <T> MutableList<T>.swap(firstIndex: Int, secondIndex: Int): MutableList<T> {
     val tmp = this[firstIndex] // 'this' corresponds to the list
     this[firstIndex] = this[secondIndex]
     this[secondIndex] = tmp
+    return this
 }
 
 
@@ -922,11 +923,11 @@ class ExtensionFunctionTest {
  **/
 
 
-data class WebSite(val url: String = "http://jayway.com")
+data class WebSite(val page: String = "index.html", val url: String = "http://jayway.com")
 
 class ArgumentTest {
     val jaywayWebSite = WebSite()
-    val googleWebSite = WebSite(url = "http://google.com")
+    val googleWebSite = WebSite(url = "http://google.com", page = "main.html")
 }
 
 
@@ -950,7 +951,9 @@ class ArgumentTest {
 
 
 /**
+ *
  * String interpolation
+ *
  */
 
 
@@ -979,7 +982,9 @@ val text = "$language has ${language.length} characters"
 
 
 /**
+ *
  * Destructuring
+ *
  */
 
 data class Color(val red: Int, val green: Int, val blue: Int)
@@ -1234,12 +1239,12 @@ class StdLib {
         val list = listOf(1, 2, 3, 4, 5, 6)
 
 
-        val areThereAnyEvenNbrsInList = list.any {it % 2 == 0} // true
+        val areThereAnyEvenNbrsInList = list.any { it % 2 == 0 } // true
         val areThereAnyNbrsGreaterThan10 = list.any { it > 10} // false
 
 
 
-        val howManyEvenNbrs = list.count {it % 2 == 0 } // 3
+        val howManyEvenNbrs = list.count { it % 2 == 0 } // 3
 
 
         val whatIsTheLargestNumber = list.max() // 6 or null
