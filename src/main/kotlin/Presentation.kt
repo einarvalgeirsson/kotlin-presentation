@@ -1,3 +1,5 @@
+import interop.RegistryBackup
+import main.interop.PersonRegistry
 import java.util.*
 
 /**
@@ -10,6 +12,69 @@ import java.util.*
 | $$ \  $$|  $$$$$$/   | $$   | $$$$$$$$ /$$$$$$| $$ \  $$
 |__/  \__/ \______/    |__/   |________/|______/|__/  \__/
  **/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ *
+ *
+ *
+ *
+ *  PROPERTIES
+ *
+ *
+ *
+ *
+ *
+ **/
+
+
+
+
+
+/**
+ *
+ *
+ * Val / Var
+ * Immutable / Mutable
+ *
+ * - public by default
+ * - val generates getter
+ * - var generates getter and setter
+ *
+ **/
+
+class ValVar {
+    val immutable = "can't be re-assigning this one"
+
+    var mutable = "go ahead"
+
+    init {
+        immutable = "tryin!"
+        mutable = "Ok!"
+    }
+}
+
+
+
 
 
 
@@ -67,17 +132,8 @@ import java.util.*
 
 
 
-
-
-
-
-
-
 /**
  * Basic Class
- *
- * - Final by default
- * -
  **/
 class User {
     // ....
@@ -187,34 +243,6 @@ class Customer(name: String) {
 
 
 
-/**
- * Note that parameters of the primary constructor can be used in the initializer blocks.
- * They can also be used in property initializers declared in the class body:
- **/
-class Patient(name: String) {
-    val patientNameCaps = name.toUpperCase()
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -225,15 +253,10 @@ class Patient(name: String) {
 
 /**
  * Properties can be declared and initialized in the primary constructor
+ * - getters and/or setters will be generated
  **/
 class Employee(val vacationDays: Int) {
 
-}
-
-class System(employee: Employee) {
-    init {
-
-    }
 }
 
 
@@ -376,7 +399,7 @@ class Key(val value: Int) {
 
 // Java
 // public static final field in Key class
-// Key.COMPARATOR.compare(key1, key2);
+// KeyKt.COMPARATOR.compare(key1, key2);
 
 
 
@@ -475,26 +498,7 @@ class Bank: Contract {
 
 
 
-/**
- *
- *
- * Val / Var
- *
- *
- **/
 
-class ValVar {
-    val immutable = "can't be re-assigning this one"
-
-    var mutable = "go ahead"
-
-    lateinit var hej: String
-    init {
-        immutable = "tryin!"
-        mutable = "Ok!"
-    }
-
-}
 
 
 
@@ -535,11 +539,12 @@ class ValVar {
 
 
 
-
-
+// Can be simplified...
 fun double(x: Int): Int {
-    return 2*x
+    return 2 * x
 }
+
+
 
 
 class CallingFunctionz {
@@ -561,16 +566,6 @@ class CallingFunctionz {
 
 
 
-
-
-/**
- * Higher-Order functions
- **/
-fun operation(name: String, giveRaise: () -> Unit) {
-    if (name == "einar") {
-        giveRaise()
-    }
-}
 
 
 
@@ -600,31 +595,68 @@ fun operation(name: String, giveRaise: () -> Unit) {
  * Lambdas
  **/
 
-class Lambda {
-    val printHelloWorld = {
-        println("Hello, world!")
+class LambdaExample {
+
+    val helloWorld = {
+        if (russianNames.contains("Artem")) "Привет мир" else "Hello, world!"
     }
 
     init {
-        printHelloWorld()
+        println(helloWorld)
+    }
+}
+
+val russianNames = arrayOf("Maksim", "Artem", "Sophia", "Maria", "Maksim")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Higher-Order functions
+ **/
+class Benchmark {
+    fun benchmark(functionToMeasure: () -> Unit): Long {
+        val startTime = System.currentTimeMillis()
+        functionToMeasure.invoke()
+        return System.currentTimeMillis() - startTime
+    }
+}
+
+val benchmark = Benchmark()
+val runtime = benchmark.benchmark {
+    for (i in 0..100000) {
+        println("Employee: ${Employee(i)}")
     }
 }
 
 
 
 
-val russianNames = arrayOf("Maksim", "Artem", "Sophia", "Maria", "Maksim")
 
-val selectedName = russianNames
-        .filter { name -> name.startsWith("m", ignoreCase = true) }
-        .sortedBy { name -> name.length }
-        .firstOrNull()
-
-
-val selectedNameShortened = russianNames
-        .filter { it.startsWith("m", ignoreCase = true) }
-        .sortedBy { it.length }
-        .firstOrNull()
 
 
 
@@ -789,18 +821,6 @@ class Nullability {
 
 
 
-/**
- *
- * Equivalent of Java POJO.
- *
- * Compiler generates equals(), hashCode(), getters, setters (if mutable), copy() and toString()
- *
- *
- **/
-data class Car(val manufacturer: String?, val insurancePayed: Boolean, val leftHandSteering: Boolean)
-
-
-
 
 
 
@@ -837,29 +857,19 @@ fun String.replaceSpaceWithDash(): String {
     return this.replace(" ", "-")
 }
 
-fun <T> MutableList<T>.swap(index1: Int, index2: Int) {
-    val tmp = this[index1] // 'this' corresponds to the list
-    this[index1] = this[index2]
-    this[index2] = tmp
+fun <T> MutableList<T>.swap(firstIndex: Int, secondIndex: Int) {
+    val tmp = this[firstIndex] // 'this' corresponds to the list
+    this[firstIndex] = this[secondIndex]
+    this[secondIndex] = tmp
 }
 
 
 
 
-class Test {
+class ExtensionFunctionTest {
+    val textWithDash = "this is a text with spaces".replaceSpaceWithDash()
 
-    init {
-
-
-        val textWithDash = "this is a text with spaces".replaceSpaceWithDash()
-
-
-
-
-        val list = mutableListOf(1, 2, 3, 4)
-
-        list.swap(0, 3)
-    }
+    val swappedList = mutableListOf(1, 2, 3, 4).swap(0, 3)
 }
 
 
@@ -884,17 +894,7 @@ class Test {
 
 
 
-/**
- *
- *
- * Java Interoperability!
- *
- *
- **/
 
-// Java can be called from Kotlin and vice versa
-
-// Copy paste some java code now!
 
 
 
@@ -924,13 +924,9 @@ class Test {
 
 data class WebSite(val url: String = "http://jayway.com")
 
-class Test3 {
-    init {
-
-        val jaywayWebSite = WebSite()
-        val googleWebSite = WebSite("http://google.com")
-
-    }
+class ArgumentTest {
+    val jaywayWebSite = WebSite()
+    val googleWebSite = WebSite(url = "http://google.com")
 }
 
 
@@ -954,7 +950,7 @@ class Test3 {
 
 
 /**
- * String templates
+ * String interpolation
  */
 
 
@@ -986,23 +982,36 @@ val text = "$language has ${language.length} characters"
  * Destructuring
  */
 
-// now with prism
-val (red, green, blue) = color
-// destructing four squares
-val (left, top, right, bottom) = rect
-// or more pointedly
-val (x, y) = point
+data class Color(val red: Int, val green: Int, val blue: Int)
+data class Rect(val left: Int, val top: Int, val right: Int, val bottom: Int)
+data class Point(val x: Int, val y: Int)
 
-// iterating over a map with destructuring
-for ((key, value) in map) {
-    // do something with the key and the value
+class DestructuringDemo {
+
+    val map = mapOf(0 to "Einar", 1 to "Fredrik")
+
+    fun testDestruct() {
+        // now with prism
+        val (red, green, blue) = Color(red = 255, green = 125, blue = 0)
+        // destructing four squares
+        val (left, top, right, bottom) = Rect(0, 0, 1920, 1080)
+        // or more pointedly
+        val (x, y) = Point(100, 200)
+
+        // iterating over a map with destructuring
+        for ((id, name) in map) {
+            // do something with the entries
+        }
+    }
 }
+
+
 
 // This works because the Kotlin standard library declares extension
 // functions (componentN()) for Map.Entry, with the keyword operator
-operator fun <K, V> Map<K, V>.iterator(): Iterator<Map.Entry<K, V>> = entrySet().iterator()
-operator fun <K, V> Map.Entry<K, V>.component1() = getKey()
-operator fun <K, V> Map.Entry<K, V>.component2() = getValue()
+//   operator fun <K, V> Map<K, V>.iterator(): Iterator<Map.Entry<K, V>> = entrySet().iterator()
+//   operator fun <K, V> Map.Entry<K, V>.component1() = getKey()
+//   operator fun <K, V> Map.Entry<K, V>.component2() = getValue()
 
 
 
@@ -1019,13 +1028,9 @@ operator fun <K, V> Map.Entry<K, V>.component2() = getValue()
 /**
  * Kotlin Standard Library
  *
- * Higher-order functions implementing idiomatic patterns (let, apply, use, synchronized, etc).
+ * Useful functions implementing idiomatic patterns, working with collections, framework classes, etc.
  *
- * Extension functions providing querying operations for collections (eager) and sequences (lazy).
- *
- * Various utilities for working with strings and char sequences.
- *
- * Extensions for JDK classes making it convenient to work with files, IO, and threading.
+ * For Android there's Android KTX for simplifying Android development.
  *
  **/
 
@@ -1043,16 +1048,6 @@ class StdLib {
          **/
         job?.let {
             doStuffIfJobIsNotNull()
-                    .also {
-                        doSomeOtherStuff()
-                    }
-        }
-        val str = "..."
-
-        val result = str.let {
-            print(this) // Receiver
-            print(it) // Argument
-            42 // Block return value
         }
 
 
@@ -1070,6 +1065,8 @@ class StdLib {
         /**
          *
          * apply
+         *
+         * A builder type pattern that always returns the object the operations execute on
          *
          **/
         val wednesday = job?.apply {
@@ -1097,12 +1094,13 @@ class StdLib {
          *
          * with
          *
+         * Applies operations on the object but may return anything at the end of the block
+         *
          **/
-
-        with(KotlinWindow()) {
+        val window = KotlinWindow()
+        with(window) {
             setWidth(100)
             setHeight(200)
-
         }
 
 
@@ -1120,16 +1118,20 @@ class StdLib {
         fun printColorName(color: Colors) {
 
             when (color) {
-                Colors.RED -> printf("RED")
-                Colors.BLUE -> printf("BLUE")
-                Colors.YELLOW -> printf("YELLOW")
+                Colors.RED -> println("RED")
+                Colors.BLUE -> println("BLUE")
+                Colors.YELLOW -> println("YELLOW")
                 Colors.GREEN -> {
                     // Execute a block instead
                 }
                 else -> {
 
                 }
+            }
 
+            when {
+                "Lion".equals("Tiger") -> println("Genetic error")
+                1 == 2 -> println("Now that's odd..")
             }
         }
 
@@ -1186,7 +1188,7 @@ class StdLib {
          * Lazy init, initialized on first call and then cached
          *
          */
-        val preferences: String by lazy { sharedPreferences.getString(PREFERENCE_KEY) }
+        val repository: Repository by lazy { Repository("Database") }
 
 
 
@@ -1201,22 +1203,11 @@ class StdLib {
 
 
 
-        /**
-         *
-         * lateinit, a promise to initialize a property later
-         *
-         */
-        class MyActivity : AppCompatActivity() {
 
-            lateinit var recyclerView: RecyclerView   // non-null, but not initialized
 
-            override fun onCreate(savedInstanceState: Bundle?) {
-                super.onCreate(savedInstanceState)
 
-                // ..
-                recyclerView = findViewById(R.id.recycler_view) // initialized here
-            }
-        }
+
+
 
 
 
@@ -1275,6 +1266,79 @@ class StdLib {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     *
+     * Java Interoperability!
+     *
+     *
+     **/
+
+    // Java can be called from Kotlin and vice versa
+
+    class InterOpTest() {
+        private val registryBackup = RegistryBackup()
+
+        fun backupTest() {
+            val nullable: PersonRegistry? = registryBackup.nullableRegistry
+            val notNull: PersonRegistry = registryBackup.notNullRegistry
+            val notAnnotated: PersonRegistry = registryBackup.registryNotAnnotated
+        }
+
+        // Copy paste some java code now!
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     class KotlinWindow{
         fun setWidth(i: Int){}
         fun setHeight(i: Int){}
@@ -1302,6 +1366,35 @@ class Job {
     fun instagram() {}
     fun facebook() {}
 }
+
+class Repository(val name: String)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

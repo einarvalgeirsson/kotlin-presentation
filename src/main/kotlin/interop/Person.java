@@ -1,4 +1,4 @@
-package main.interop;
+package interop;
 
 import java.util.Objects;
 
@@ -44,6 +44,10 @@ public class Person {
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    public int getYearsToRetirement() {
+        return 65 - age;
     }
 
     @Override
