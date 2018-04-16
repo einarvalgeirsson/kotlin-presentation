@@ -74,10 +74,24 @@ import java.util.*
 
 
 /**
- * Class
+ * Basic Class
+ *
+ * - Final by default
+ * -
  **/
 class User {
+    // ....
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -104,7 +118,23 @@ class User {
 /**
  * Class with primary constructor
  **/
-class ClassWithPrimaryConstructor(name: String)
+class UserWithName(name: String) {
+    // ...
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -127,9 +157,17 @@ class ClassWithPrimaryConstructor(name: String)
  */
 class Customer(name: String) {
     init {
-        logger.info("Customer initialized with value ${name}")
+        System.out.println("Customer initialized with value $name")
     }
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -152,11 +190,26 @@ class Customer(name: String) {
 /**
  * Note that parameters of the primary constructor can be used in the initializer blocks.
  * They can also be used in property initializers declared in the class body:
- *
  **/
-class Customer2(name: String) {
-    val customerKey = name.toUpperCase()
+class Patient(name: String) {
+    val patientNameCaps = name.toUpperCase()
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -173,10 +226,15 @@ class Customer2(name: String) {
 /**
  * Properties can be declared and initialized in the primary constructor
  **/
-class Employee(val vacationDays: Int)
+class Employee(val vacationDays: Int) {
 
-class Company(val employees : List<Employee> = mutableListOf(Employee(5)))
+}
 
+class System(employee: Employee) {
+    init {
+
+    }
+}
 
 
 
